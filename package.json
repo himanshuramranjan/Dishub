@@ -1,0 +1,18 @@
+{
+  "name": "dishub",
+  "version": "1.0.0",
+  "description": "Hub for open discussions",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Himanshuram Ranjan",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^5.13.17",
+    "nodemon": "^2.0.22"
+  }
+}
