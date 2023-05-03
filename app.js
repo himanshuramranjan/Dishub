@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json({ limit: '10kb'}));
 
 // Routes
-app.use('/api/v1/dishub/post', postRouter);
+app.use('/api/v1/dishub/posts', postRouter);
 
 // Any other undefined routes
 app.use('*', (req, res, next) => {
