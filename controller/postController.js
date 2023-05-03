@@ -31,7 +31,7 @@ exports.createPost = catchAsyncError(async (req, res, next) => {
 });
 
 // Get a single post
-exports. getPost = catchAsyncError(async (req, res, next) => {
+exports.getPost = catchAsyncError(async (req, res, next) => {
     
     const post = await Post.findById(req.params.id);
 
@@ -48,7 +48,7 @@ exports. getPost = catchAsyncError(async (req, res, next) => {
 });
 
 // Update the post
-const updatePost = catchAsyncError(async (req, res, next) => {
+exports.updatePost = catchAsyncError(async (req, res, next) => {
 
     const post = Post.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
@@ -68,7 +68,7 @@ const updatePost = catchAsyncError(async (req, res, next) => {
 });
 
 // Delete a Post
-const deletePost = catchAsyncError(async (req, res, next) => {
+exports.deletePost = catchAsyncError(async (req, res, next) => {
     
     const post = await Post.findByIdAndDelete(req.params.id);
 
