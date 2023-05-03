@@ -1,5 +1,7 @@
 const express = require('express');
+
 const errorHandler = require('./controller/errorController');
+const postRouter = require('./routes/postRoutes');
 const AppError = require('./utils/appError');
 
 const app = express();
@@ -8,7 +10,7 @@ const app = express();
 app.use(express.json({ limit: '10kb'}));
 
 // Routes
-// app.use('/api/v1/dishub');
+app.use('/api/v1/dishub/post', postRouter);
 
 // Any other undefined routes
 app.use('*', (req, res, next) => {
