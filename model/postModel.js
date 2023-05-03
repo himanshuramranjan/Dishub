@@ -11,7 +11,8 @@ const postSchema = new mongoose.Schema({
     },
     content: {
         type: String,
-        required: [true, 'Content body is required for post']
+        required: [true, 'Content body is required for post'],
+        minLength: [10, 'Content should be atleast 10 chars long']
     },
     upvotes: {
         type: Number,
@@ -24,6 +25,12 @@ const postSchema = new mongoose.Schema({
     domain: {
         type: [String],
         required: [true, 'A post must have a domain'],
+        validate: {
+            validator: function(val) {
+                return val.length > 0;
+            },
+            message: 'Post should contain alteast 1 domain'
+        },
         enum: {
             values: ['Tech', 'Sports', 'Art', 'Abstract'],
             message: 'Choose domain from Tech, Sports, Art and Abstract'
