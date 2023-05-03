@@ -12,7 +12,7 @@ process.on('uncaughtException', (err) => {
     console.log('Shutting down the server due to some uncaught exception');
 
     process.exit(1);
-})
+});
 
 // Define DB connection URI String
 const DB = process.env.DATABASE.replace(
