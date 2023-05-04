@@ -1,5 +1,5 @@
 const catchAsyncError = require('../utils/catchAsyncError');
-const AppError = require('../utils/appError');
+const AppError = require('../utils/AppError');
 
 
 // Get All the docs

@@ -3,7 +3,7 @@ const express = require('express');
 const errorHandler = require('./controller/errorController');
 const postRouter = require('./routes/postRoutes');
 const commentRouter = require('./routes/commentRoutes');
-const AppError = require('./utils/appError');
+const AppError = require('./utils/AppError');
 
 const app = express();
 

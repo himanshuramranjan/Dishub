@@ -2,7 +2,7 @@ const Post = require('../model/postModel');
 const catchAsyncError = require('../utils/catchAsyncError');
 const globalController = require('../controller/globalController');
 
-const AppError = require('../utils/appError');
+const AppError = require('../utils/AppError');
 
 
 // Get All Posts
