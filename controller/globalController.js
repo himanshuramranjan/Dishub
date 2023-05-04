@@ -1,11 +1,18 @@
 const catchAsyncError = require('../utils/catchAsyncError');
 const AppError = require('../utils/AppError');
-
+const AppFeatures = require('../utils/AppFeatures');
 
 // Get All the docs
 exports.getAll = Model => catchAsyncError(async (req, res, next) => {
 
-    const docs = await Model.find();
+    // apply the app features to get the desired o/p
+    const features = new AppFeatures(Model, req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
+    
+    const docs = await features.query;
 
     res.status(200).json({
         status: 'Success',
