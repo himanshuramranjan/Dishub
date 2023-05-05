@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-
+const bcrypt = require('bcryptjs');
 
 const creatorSchema = new mongoose.Schema({
     name: {
@@ -39,6 +39,33 @@ const creatorSchema = new mongoose.Schema({
     passwordResetToken: String,
     passwordResetExpires: Date, 
 });
+
+// update passwordChangedAt, if password is changed
+creatorSchema.pre('save', function(next) {
+
+    // if pswd not modified in any update or when new user sign up
+    if(!this.isModified('password') || this.isNew) return next();
+
+    this.passwordChangedAt = Date.now() - 1000;
+    next();
+});
+
+// encrpt the user password
+creatorSchema.pre('save', async function(next) {
+
+    // if during update password field is not changed
+    if(!this.isModified('password')) return next();
+
+    this.password = await bcrypt.hash(this.password, 12);
+    this.passwordConfirm = undefined;
+
+    return (next);
+});
+
+// compares the actual password w/ user provided password
+creatorSchema.methods.isCorrectPassword = async function(candidatePswd, creatorPswd) {
+    return await bcrypt.compare(candidatePswd, creatorPswd);
+}
 
 const Creator = mongoose.model('Creator', creatorSchema);
 
