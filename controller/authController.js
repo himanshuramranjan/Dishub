@@ -71,16 +71,6 @@ exports.signup = catchAsyncError(async (req, res, next) => {
     const creator = await Creator.create(req.body);
 
     sendJWTToken(201, creator, res);
-    // const token = signInToken(creator._id);
-
-    // res.status(201).json({
-    //     status: 'Success',
-    //     token,
-    //     data: {
-    //         creator
-    //     }
-    // });
-
 });
 
 // logs in a existing user
