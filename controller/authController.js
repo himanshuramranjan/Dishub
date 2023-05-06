@@ -65,6 +65,18 @@ exports.protectRoute = catchAsyncError(async (req, res, next) => {
     next();
 });
 
+// protect routes from un-authorized req
+exports.restrictRoute = (...roles) => {
+    return (req, res, next) => {
+
+        // checks if req has roles for the action
+        if(!roles.includes(req.creator.role)) {
+            return next(new AppError('You are not authorized for this action', 403));
+        }
+        next();
+    }
+}
+
 // signs up a new creator
 exports.signup = catchAsyncError(async (req, res, next) => {
     

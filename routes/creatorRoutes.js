@@ -20,6 +20,9 @@ router.patch('/updatePassword', authController.updatePassword);
 
 // Admin Accessible ROUTES
 
+//protects all the below routes from un-authorized req
+router.use(authController.restrictRoute('admin'));
+
 router
     .route('/')
     .get(creatorController.getAllCreators)
