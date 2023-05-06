@@ -47,7 +47,7 @@ exports.protectRoute = catchAsyncError(async (req, res, next) => {
     // decode the jwt token to get the creatorId
     const decodedToken = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-    // check for existing user
+    // check for existing creator
     const existingCreator = await Creator.findById(decodedToken.id);
 
     // if no creator exist w/ given id
@@ -73,7 +73,7 @@ exports.signup = catchAsyncError(async (req, res, next) => {
     sendJWTToken(201, creator, res);
 });
 
-// logs in a existing user
+// logs in a existing creator
 exports.login = catchAsyncError(async (req, res, next) => {
 
     const { email, password } = req.body;
@@ -83,14 +83,32 @@ exports.login = catchAsyncError(async (req, res, next) => {
         return next(new AppError(`Please provide email and password`, 400));
     }
 
-    // find the user based on provided credentials
+    // find the creator based on provided credentials
     const creator = await Creator.findOne({email}).select('+password');
 
-    // returns error if no user exist
+    // returns error if no creator exist
     if(!creator || !(await creator.isCorrectPassword(password, creator.password))) {
         return next(new AppError('Incorrect name or password', 401));
     }
 
-    // send jwt token if user exist
+    // send jwt token if creator exist
+    sendJWTToken(200, creator, res);
+});
+
+exports.updatePassword = catchAsyncError(async (req, res, next) => {
+    // get the creator
+    const creator = await Creator.findById(req.creator.id).select('+password');
+
+    
+    // check if provided password is incorrect
+    if(!(await creator.isCorrectPassword(req.body.currentPassword, creator.password))) {
+        return next(new AppError('Your current password is wrong', 401));
+    }
+
+    // update the creator password
+    creator.password = req.body.password;
+    creator.passwordConfirm = req.body.passwordConfirm;
+    await creator.save();
+
     sendJWTToken(200, creator, res);
 });

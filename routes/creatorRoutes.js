@@ -10,10 +10,15 @@ router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 
 
-// Admin Accessible ROUTES
+
+
 
 //protects all the below routes from un-authenticated req
 router.use(authController.protectRoute);
+
+router.patch('/updatePassword', authController.updatePassword);
+
+// Admin Accessible ROUTES
 
 router
     .route('/')

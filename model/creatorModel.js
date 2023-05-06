@@ -45,8 +45,7 @@ creatorSchema.pre('save', function(next) {
 
     // if pswd not modified in any update or when new creator sign up
     if(!this.isModified('password') || this.isNew) return next();
-
-    console.log('Password is changed');
+    
     this.passwordChangedAt = Date.now() - 1000;
     next();
 });
