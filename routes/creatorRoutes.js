@@ -12,6 +12,9 @@ router.post('/login', authController.login);
 
 // Admin Accessible ROUTES
 
+//protects all the below routes from un-authenticated req
+router.use(authController.protectRoute);
+
 router
     .route('/')
     .get(creatorController.getAllCreators)
