@@ -1,6 +1,7 @@
 const express = require('express');
 
 const commentController = require('../controller/commentController');
+const authController = require('../controller/authController');
 
 const router = express.Router();
 
@@ -8,7 +9,10 @@ const router = express.Router();
 router
     .route('/')
     .get(commentController.getAllComments)
-    .post(commentController.createComment);
+    .post(authController.protectRoute,
+          authController.restrictRoute('creator'), 
+          commentController.addParam,
+          commentController.createComment);
 
 router
     .route('/:id')

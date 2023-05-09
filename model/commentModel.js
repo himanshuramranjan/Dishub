@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const Creator = require('./creatorModel');
+const Post = require('./postModel');
+
 
 const commentSchema = new mongoose.Schema({
     comment: {
@@ -10,12 +13,14 @@ const commentSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    user: {
-        type: String,
+    creator: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Creator',
         required: true
     },
     post: {
-        type: String,
+        type: mongoose.Schema.ObjectId,
+        ref: 'Post',
         required: true
     },
     createdAt: {
@@ -28,6 +33,19 @@ const commentSchema = new mongoose.Schema({
     toObject: { virtuals: true}
 });
 
+// populate the creator and related post of the comment
+commentSchema.pre(/^find/, function(next) {
+
+    this.populate({
+        path: 'creator',
+        select: 'name'
+    }).populate({
+        path: 'post',
+        select: 'title'
+    });
+
+    next();
+});
 
 const Comment = mongoose.model('Comment', commentSchema);
 
