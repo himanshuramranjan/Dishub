@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Creator = require('../model/creatorModel');
 
 const postSchema = new mongoose.Schema({
     title: {
@@ -50,6 +51,17 @@ const postSchema = new mongoose.Schema({
     toJSON: { virtuals: true},
     toObject: { virtuals: true}
 });
+
+// Populate creator of the Post
+postSchema.pre(/^find/, function(next) {
+
+    this.populate({
+        path: 'creator',
+        select: 'name _id'
+    });
+
+    next();
+})
 
 const Post = mongoose.model('Post', postSchema);
 

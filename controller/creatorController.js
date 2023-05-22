@@ -1,4 +1,5 @@
 const Creator = require('../model/creatorModel');
+const Post = require('../model/postModel');
 const globalController = require('./globalController');
 const catchAsyncError = require('../utils/catchAsyncError');
 const AppError = require('../utils/AppError');
@@ -7,9 +8,22 @@ const AppError = require('../utils/AppError');
 exports.getCurrentCreator = (req, res, next) => {
 
     // populate params.id w/ creator id 
-    req.params.id = req.creator.id;
+    req.body.creator = req.creator.id;
     next();
 }
+
+// Validate if the Creator is same as logged In Creator
+exports.checkCreator = catchAsyncError(async (req, res, next) => {
+    
+    const post = await Post.findById(req.params.id);
+
+    // check if current creator is the owner of the post
+    if(!post.creator._id.equals(req.creator.id)) {
+        
+        return next(new AppError(`You are not authorized to update this post`, 403));
+    }
+    next();
+});
 
 // filters out the filed which cant be updated
 const filterObj = (obj, ...allowedFields) => {

@@ -2,6 +2,13 @@ const Comment = require('../model/commentModel');
 const catchAsyncError = require('../utils/catchAsyncError');
 const globalController = require('./globalController');
 
+// Add Creator ID to the params
+exports.addParam = catchAsyncError(async (req, res, next) => {
+
+    req.body.creator = req.creator.id;
+    next();
+})
+
 // Get All Comments
 exports.getAllComments = globalController.getAll(Comment);
 
