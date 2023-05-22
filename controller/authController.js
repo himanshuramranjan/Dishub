@@ -107,6 +107,8 @@ exports.login = catchAsyncError(async (req, res, next) => {
     sendJWTToken(200, creator, res);
 });
 
+
+// update password for logged In Creator
 exports.updatePassword = catchAsyncError(async (req, res, next) => {
     // get the creator
     const creator = await Creator.findById(req.creator.id).select('+password');
