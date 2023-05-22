@@ -12,7 +12,7 @@ exports.getCurrentCreator = (req, res, next) => {
     next();
 }
 
-// Validate if the Creator is same as logged In Creator
+// Checks if the Creator is same as logged In Creator
 exports.checkCreator = catchAsyncError(async (req, res, next) => {
     
     const post = await Post.findById(req.params.id);
