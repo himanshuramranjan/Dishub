@@ -1,4 +1,5 @@
 const express = require('express');
+const Post = require('../model/postModel');
 const postController = require('../controller/postController');
 const authController = require('../controller/authController');
 const creatorController = require('../controller/creatorController');
@@ -20,12 +21,12 @@ router
     .get(postController.getPost)
     .patch(
         authController.protectRoute, 
-        creatorController.checkCreator,
+        authController.checkCreator(Post),
         postController.updatePost
         )
     .delete(
         authController.protectRoute, 
-        creatorController.checkCreator,
+        authController.checkCreator(Post),
         postController.deletePost
         );
 

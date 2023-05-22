@@ -126,3 +126,16 @@ exports.updatePassword = catchAsyncError(async (req, res, next) => {
 
     sendJWTToken(200, creator, res);
 });
+
+// Checks if the Creator is same as logged In Creator
+exports.checkCreator = Model => catchAsyncError(async (req, res, next) => {
+    
+    const doc = await Model.findById(req.params.id);
+
+    // check if current creator is the owner of the post
+    if(!doc.creator._id.equals(req.creator.id)) {
+        
+        return next(new AppError(`You are not authorized to modify this post`, 403));
+    }
+    next();
+});

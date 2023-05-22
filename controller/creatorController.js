@@ -12,19 +12,6 @@ exports.getCurrentCreator = (req, res, next) => {
     next();
 }
 
-// Checks if the Creator is same as logged In Creator
-exports.checkCreator = catchAsyncError(async (req, res, next) => {
-    
-    const post = await Post.findById(req.params.id);
-
-    // check if current creator is the owner of the post
-    if(!post.creator._id.equals(req.creator.id)) {
-        
-        return next(new AppError(`You are not authorized to modify this post`, 403));
-    }
-    next();
-});
-
 // filters out the filed which cant be updated
 const filterObj = (obj, ...allowedFields) => {
 
@@ -41,7 +28,6 @@ exports.getAllCreators = globalController.getAll(Creator);
 
 // Get a Creator
 exports.getCreator = globalController.getOne(Creator);
-
 
 // Create a Creator
 exports.createCreator = catchAsyncError(async (req, res, next) => {

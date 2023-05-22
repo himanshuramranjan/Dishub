@@ -18,7 +18,13 @@ router
 router
     .route('/:id')
     .get(commentController.getComment)
-    .patch(commentController.updateComment)
-    .delete(commentController.deleteComment);
+    .patch(
+        authController.protectRoute, 
+        commentController.updateComment
+        )
+    .delete(
+        authController.protectRoute, 
+        commentController.deleteComment
+        );
 
 module.exports = router;
