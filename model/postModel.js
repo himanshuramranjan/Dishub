@@ -37,9 +37,9 @@ const postSchema = new mongoose.Schema({
         }
     },
     creator: {
-        // type: mongoose.Schema.ObjectId,
-        // ref: 'Creator'
-        type: String
+        type: mongoose.Schema.ObjectId,
+        ref: 'Creator',
+        required: true
     },
     createdAt: {
         type: Date,

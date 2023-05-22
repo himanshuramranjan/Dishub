@@ -13,7 +13,7 @@ router.post('/login', authController.login);
 //protects all the below routes from un-authenticated req
 router.use(authController.protectRoute);
 
-router.get('/me', creatorController.getMe, creatorController.getCreator);
+router.get('/me', creatorController.getCurrentCreator, creatorController.getCreator);
 router.patch('/updateMe', creatorController.updateMe);
 router.delete('/deleteMe', creatorController.deleteMe);
 router.patch('/updatePassword', authController.updatePassword);

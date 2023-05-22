@@ -3,6 +3,14 @@ const globalController = require('./globalController');
 const catchAsyncError = require('../utils/catchAsyncError');
 const AppError = require('../utils/AppError');
 
+// Set the id params of the current logged in creator
+exports.getCurrentCreator = (req, res, next) => {
+
+    // populate params.id w/ creator id 
+    req.params.id = req.creator.id;
+    next();
+}
+
 // filters out the filed which cant be updated
 const filterObj = (obj, ...allowedFields) => {
 
@@ -41,15 +49,6 @@ exports.updateCreator = catchAsyncError(async (req, res, next) => {
 
 // Delete the Creator
 exports.deleteCreator = globalController.deleteOne(Creator);
-
-
-// Set the id params of the creator
-exports.getMe = (req, res, next) => {
-
-    // populate params.id w/ creator id 
-    req.params.id = req.creator.id;
-    next();
-}
 
 // Update the creator's account by theirself
 exports.updateMe = catchAsyncError(async (req, res, next) => {

@@ -2,6 +2,7 @@ const express = require('express');
 
 const commentController = require('../controller/commentController');
 const authController = require('../controller/authController');
+const creatorController = require('../controller/creatorController');
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router
     .get(commentController.getAllComments)
     .post(authController.protectRoute,
           authController.restrictRoute('creator'), 
-          commentController.addParam,
+          creatorController.getCurrentCreator,
           commentController.createComment);
 
 router
