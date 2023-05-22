@@ -20,7 +20,7 @@ exports.checkCreator = catchAsyncError(async (req, res, next) => {
     // check if current creator is the owner of the post
     if(!post.creator._id.equals(req.creator.id)) {
         
-        return next(new AppError(`You are not authorized to update this post`, 403));
+        return next(new AppError(`You are not authorized to modify this post`, 403));
     }
     next();
 });

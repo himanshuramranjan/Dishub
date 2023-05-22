@@ -19,7 +19,9 @@ router
     .patch(authController.protectRoute, 
            creatorController.checkCreator,
            postController.updatePost)
-    .delete(postController.deletePost);
+    .delete(authController.protectRoute, 
+            creatorController.checkCreator,
+            postController.deletePost);
 
 
 module.exports = router;
