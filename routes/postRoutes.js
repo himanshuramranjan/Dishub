@@ -8,20 +8,26 @@ const router = express.Router();
 router
     .route('/')
     .get(postController.getAllPosts)
-    .post(authController.protectRoute, 
-          authController.restrictRoute('creator'), 
-          creatorController.getCurrentCreator, 
-          postController.createPost);
+    .post(
+        authController.protectRoute, 
+        authController.restrictRoute('creator'), 
+        creatorController.getCurrentCreator, 
+        postController.createPost
+        );
 
 router
     .route('/:id')
     .get(postController.getPost)
-    .patch(authController.protectRoute, 
-           creatorController.checkCreator,
-           postController.updatePost)
-    .delete(authController.protectRoute, 
-            creatorController.checkCreator,
-            postController.deletePost);
+    .patch(
+        authController.protectRoute, 
+        creatorController.checkCreator,
+        postController.updatePost
+        )
+    .delete(
+        authController.protectRoute, 
+        creatorController.checkCreator,
+        postController.deletePost
+        );
 
 
 module.exports = router;
