@@ -16,6 +16,7 @@ exports.addParams = (req, res, next) => {
 // Get All the docs
 exports.getAll = Model => catchAsyncError(async (req, res, next) => {
 
+    // filters out comments for a given post
     let filter = {};
     if(req.params.postId) filter = { post : req.params.postId};
 
