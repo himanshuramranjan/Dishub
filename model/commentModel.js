@@ -41,7 +41,7 @@ commentSchema.pre(/^find/, function(next) {
         select: 'name'
     }).populate({
         path: 'post',
-        select: 'title'
+        select: 'title -creator'
     });
 
     next();

@@ -1,10 +1,10 @@
 const express = require('express');
-
+const Comment = require('../model/commentModel');
 const commentController = require('../controller/commentController');
 const authController = require('../controller/authController');
-const creatorController = require('../controller/creatorController');
+const globalController = require('../controller/globalController');
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true});
 
 
 router
@@ -12,7 +12,7 @@ router
     .get(commentController.getAllComments)
     .post(authController.protectRoute,
           authController.restrictRoute('creator'), 
-          creatorController.getCurrentCreator,
+          globalController.addParams,
           commentController.createComment);
 
 router
@@ -20,10 +20,12 @@ router
     .get(commentController.getComment)
     .patch(
         authController.protectRoute, 
+        authController.checkCreator(Comment),
         commentController.updateComment
         )
     .delete(
         authController.protectRoute, 
+        authController.checkCreator(Comment),
         commentController.deleteComment
         );
 

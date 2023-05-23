@@ -3,8 +3,11 @@ const Post = require('../model/postModel');
 const postController = require('../controller/postController');
 const authController = require('../controller/authController');
 const creatorController = require('../controller/creatorController');
+const commentRouter = require('./commentRoutes');
 
 const router = express.Router();
+
+router.use('/:postId/comments', commentRouter);
 
 router
     .route('/')

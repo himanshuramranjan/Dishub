@@ -2,6 +2,17 @@ const catchAsyncError = require('../utils/catchAsyncError');
 const AppError = require('../utils/AppError');
 const AppFeatures = require('../utils/AppFeatures');
 
+// Add Params to the req body
+exports.addParams = (req, res, next) => {
+    
+    // add postId to the req.body of creating comment
+    if(req.params.postId) req.body.post = req.params.postId;
+    // add Logged In creator to the req body
+    req.body.creator = req.creator.id;
+
+    next();
+}
+
 // Get All the docs
 exports.getAll = Model => catchAsyncError(async (req, res, next) => {
 
