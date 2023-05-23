@@ -16,8 +16,11 @@ exports.addParams = (req, res, next) => {
 // Get All the docs
 exports.getAll = Model => catchAsyncError(async (req, res, next) => {
 
+    let filter = {};
+    if(req.params.postId) filter = { post : req.params.postId};
+
     // apply the app features to get the desired o/p
-    const features = new AppFeatures(Model, req.query)
+    const features = new AppFeatures(Model.find(filter), req.query)
         .filter()
         .sort()
         .limitFields()
