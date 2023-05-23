@@ -4,11 +4,9 @@ const globalController = require('./globalController');
 const catchAsyncError = require('../utils/catchAsyncError');
 const AppError = require('../utils/AppError');
 
-// Set the id params of the current logged in creator
+// add logged in creator id to the params
 exports.getCurrentCreator = (req, res, next) => {
-
-    // populate params.id w/ creator id 
-    req.body.creator = req.creator.id;
+    req.params.id = req.creator.id;
     next();
 }
 
@@ -28,6 +26,8 @@ exports.getAllCreators = globalController.getAll(Creator);
 
 // Get a Creator
 exports.getCreator = globalController.getOne(Creator);
+    
+    
 
 // Create a Creator
 exports.createCreator = catchAsyncError(async (req, res, next) => {

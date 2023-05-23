@@ -2,7 +2,7 @@ const express = require('express');
 const Post = require('../model/postModel');
 const postController = require('../controller/postController');
 const authController = require('../controller/authController');
-const creatorController = require('../controller/creatorController');
+const globalController = require('../controller/globalController');
 const commentRouter = require('./commentRoutes');
 
 const router = express.Router();
@@ -15,20 +15,21 @@ router
     .post(
         authController.protectRoute, 
         authController.restrictRoute('creator'), 
-        creatorController.getCurrentCreator, 
+        globalController.addParams, 
         postController.createPost
         );
+
+//protects all the below routes from un-authenticated req
+router.use(authController.protectRoute);
 
 router
     .route('/:id')
     .get(postController.getPost)
-    .patch(
-        authController.protectRoute, 
+    .patch( 
         authController.checkCreator(Post),
         postController.updatePost
         )
     .delete(
-        authController.protectRoute, 
         authController.checkCreator(Post),
         postController.deletePost
         );

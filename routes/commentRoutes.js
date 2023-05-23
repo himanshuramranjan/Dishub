@@ -15,16 +15,17 @@ router
           globalController.addParams,
           commentController.createComment);
 
+//protects all the below routes from un-authenticated req
+router.use(authController.protectRoute);
+
 router
     .route('/:id')
     .get(commentController.getComment)
-    .patch(
-        authController.protectRoute, 
+    .patch( 
         authController.checkCreator(Comment),
         commentController.updateComment
         )
     .delete(
-        authController.protectRoute, 
         authController.checkCreator(Comment),
         commentController.deleteComment
         );
