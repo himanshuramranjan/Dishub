@@ -39,9 +39,14 @@ exports.getAll = Model => catchAsyncError(async (req, res, next) => {
 });
 
 // Get a single doc
-exports.getOne = Model => catchAsyncError(async (req, res, next) => {
+exports.getOne = (Model, populateOpt) => catchAsyncError(async (req, res, next) => {
     
-    const doc = await Model.findById(req.params.id);
+    let query = Model.findById(req.params.id);
+
+    // check if virutal field need to be populated
+    if(populateOpt) query.populate(populateOpt);
+
+    const doc = await query;
 
     if(!doc) {
         return next(new AppError(`No doc w/ Id: ${req.params.id} exist`, 404));

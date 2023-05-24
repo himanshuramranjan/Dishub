@@ -12,7 +12,10 @@ exports.getAllPosts = globalController.getAll(Post);
 exports.createPost = globalController.createOne(Post);
 
 // Get a single post
-exports.getPost = globalController.getOne(Post);
+exports.getPost = globalController.getOne(Post, { 
+    path: 'comments', 
+    select: 'comment -post -creator -_id' 
+});
 
 // Update the post
 exports.updatePost = globalController.updateOne(Post);
