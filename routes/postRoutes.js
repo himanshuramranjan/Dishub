@@ -19,6 +19,10 @@ router
         postController.createPost
         );
 
+router
+    .route('/getTrendingPosts')
+    .get(postController.getTrendingPosts);
+
 //protects all the below routes from un-authenticated req
 router.use(authController.protectRoute);
 
