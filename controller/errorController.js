@@ -14,5 +14,9 @@ module.exports = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
 
+    // If JWT token expires
+    if(err.name === "TokenExpiredError") {
+        err.message = "You have been logged out ! Plz Login Again";
+    }
     sendErrorDev(err, res);
 }

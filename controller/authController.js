@@ -12,12 +12,30 @@ const signInToken = id => {
     });
 }
 
+// creates signIn token using jwt
+const signOutToken = id => {
+    return jwt.sign({ id: id }, process.env.JWT_SECRET, {
+        expiresIn: "10s"
+    });
+}
+
 // send jwt token after its creation
 const sendJWTToken = (statusCode, creator, res) => {
 
     const token = signInToken(creator._id);
 
-    // hides the password field on signup/login
+    // set cookie options
+    const cookieOptions = {
+        expires: new Date(
+            Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+        ),
+        httpOnly: true
+    }
+
+    // sets cookie to send jwt 
+    res.cookie('jwt', token, cookieOptions);
+
+    // hides the password field on signup
     creator.password = 'undefined';
 
     res.status(statusCode).json({
@@ -138,4 +156,26 @@ exports.checkCreator = Model => catchAsyncError(async (req, res, next) => {
         return next(new AppError(`You are not authorized to modify this post`, 403));
     }
     next();
+});
+
+// logs out a existing creator
+exports.logout = catchAsyncError(async (req, res, next) => {
+
+    const token = signOutToken(req.creator._id);
+
+    // set cookie to expire in 10sec (Creator logs out)
+    const cookieOptions = {
+        expires: new Date(
+            Date.now() +  10 * 1000
+        ),
+        httpOnly: true
+    }
+
+    // set cookie to set jwt as blank (and expires in 10s)
+    res.cookie('jwt', "", cookieOptions);
+
+    res.status(200).json({
+        status: 'Success',
+        token,
+    });
 });
