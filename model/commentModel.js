@@ -1,7 +1,4 @@
 const mongoose = require('mongoose');
-const Creator = require('./creatorModel');
-const Post = require('./postModel');
-
 
 const commentSchema = new mongoose.Schema({
     comment: {

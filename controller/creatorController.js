@@ -1,5 +1,4 @@
 const Creator = require('../model/creatorModel');
-const Post = require('../model/postModel');
 const globalController = require('./globalController');
 const catchAsyncError = require('../utils/catchAsyncError');
 const AppError = require('../utils/AppError');
