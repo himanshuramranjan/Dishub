@@ -1,9 +1,7 @@
 const Post = require('../model/postModel');
 const catchAsyncError = require('../utils/catchAsyncError');
 const globalController = require('../controller/globalController');
-
 const AppError = require('../utils/AppError');
-
 
 // Get All Posts
 exports.getAllPosts = globalController.getAll(Post);
