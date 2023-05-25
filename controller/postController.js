@@ -2,6 +2,7 @@ const Post = require('../model/postModel');
 const globalController = require('../controller/globalController');
 const catchAsyncError = require('../utils/catchAsyncError');
 
+// Hide private post from other creators
 exports.hidePrivatePost = catchAsyncError(async (req, res, next) => {
 
     // add filter to hide private post for 'Get All Post' request
