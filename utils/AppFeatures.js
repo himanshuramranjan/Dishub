@@ -16,7 +16,7 @@ class AppFeatures {
 
         // process the query to the express format
         let queryObjString = JSON.stringify(queryObj);
-        queryObjString = queryObjString.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+        queryObjString = queryObjString.replace(/\b(gte|gt|lte|lt|ne)\b/g, match => `$${match}`);
 
         // find the filtered result
         this.query = this.query.find(JSON.parse(queryObjString));

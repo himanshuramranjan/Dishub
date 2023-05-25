@@ -2,6 +2,34 @@ const Post = require('../model/postModel');
 const globalController = require('../controller/globalController');
 const catchAsyncError = require('../utils/catchAsyncError');
 
+exports.hidePrivatePost = catchAsyncError(async (req, res, next) => {
+
+    // add filter to hide private post for 'Get All Post' request
+    if(!req.creator) {
+        req.query = { private: { ne: true }};
+    }
+
+    // hide private post from other creators
+    else {
+
+        const post = await Post.findById(req.params.id);
+
+        if(!post) {
+            return next(newAppError(`The Post doesnt exist`, 401));
+        }
+
+        // if logged in creator is not the owner of this post
+        if(post.private && !post.creator._id.equals(req.creator.id)) {
+            
+            return res.status(403).json({
+                status: 'fail',
+                message: 'This is a private post'
+            });
+        }
+    }
+    next();
+});
+
 // Get All Posts
 exports.getAllPosts = globalController.getAll(Post);
 

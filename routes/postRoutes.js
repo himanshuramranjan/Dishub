@@ -11,7 +11,7 @@ router.use('/:postId/comments', commentRouter);
 
 router
     .route('/')
-    .get(postController.getAllPosts)
+    .get(postController.hidePrivatePost, postController.getAllPosts)
     .post(
         authController.protectRoute, 
         authController.restrictRoute('creator'), 
@@ -28,7 +28,7 @@ router.use(authController.protectRoute);
 
 router
     .route('/:id')
-    .get(postController.getPost)
+    .get(postController.hidePrivatePost, postController.getPost)
     .patch( 
         authController.checkCreator(Post),
         postController.updatePost
