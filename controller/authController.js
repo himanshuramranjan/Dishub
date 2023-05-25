@@ -1,9 +1,9 @@
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
-const catchAsyncError = require('../utils/catchAsyncError');
+
 const Creator = require('../model/creatorModel');
 const AppError = require('../utils/AppError');
-
+const catchAsyncError = require('../utils/catchAsyncError');
 
 // creates signIn token using jwt
 const signInToken = id => {
@@ -12,7 +12,7 @@ const signInToken = id => {
     });
 }
 
-// creates signIn token using jwt
+// creates signOut token using jwt
 const signOutToken = id => {
     return jwt.sign({ id: id }, process.env.JWT_SECRET, {
         expiresIn: "10s"
@@ -46,7 +46,6 @@ const sendJWTToken = (statusCode, creator, res) => {
         }
     });
 }
-
 
 // protect routes from un-authenticated req
 exports.protectRoute = catchAsyncError(async (req, res, next) => {
@@ -128,10 +127,10 @@ exports.login = catchAsyncError(async (req, res, next) => {
 
 // update password for logged In Creator
 exports.updatePassword = catchAsyncError(async (req, res, next) => {
+
     // get the creator
     const creator = await Creator.findById(req.creator.id).select('+password');
 
-    
     // check if provided password is incorrect
     if(!(await creator.isCorrectPassword(req.body.currentPassword, creator.password))) {
         return next(new AppError('Your current password is wrong', 401));
@@ -145,7 +144,7 @@ exports.updatePassword = catchAsyncError(async (req, res, next) => {
     sendJWTToken(200, creator, res);
 });
 
-// Checks if the Creator is same as logged In Creator
+// checks if the Creator is same as logged In Creator
 exports.checkCreator = Model => catchAsyncError(async (req, res, next) => {
     
     const doc = await Model.findById(req.params.id);

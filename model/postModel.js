@@ -51,7 +51,6 @@ const postSchema = new mongoose.Schema({
     toObject: { virtuals: true}
 });
 
-
 // virutal populate to get comments for a post
 postSchema.virtual('comments', {
     ref: 'Comment',
@@ -59,7 +58,7 @@ postSchema.virtual('comments', {
     localField: '_id'
 });
 
-// Populate creator of the Post
+// populate creator of the post
 postSchema.pre(/^find/, function(next) {
 
     this.populate({

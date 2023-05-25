@@ -2,7 +2,7 @@ const Post = require('../model/postModel');
 const globalController = require('../controller/globalController');
 const catchAsyncError = require('../utils/catchAsyncError');
 
-// Hide private post from other creators
+// hide private post from other creators
 exports.hidePrivatePost = catchAsyncError(async (req, res, next) => {
 
     // add filter to hide private post for 'Get All Post' request
@@ -31,25 +31,25 @@ exports.hidePrivatePost = catchAsyncError(async (req, res, next) => {
     next();
 });
 
-// Get All Posts
+// get All Posts
 exports.getAllPosts = globalController.getAll(Post);
 
-// Create a new Post
+// create a new Post
 exports.createPost = globalController.createOne(Post);
 
-// Get a single post
+// get a single post
 exports.getPost = globalController.getOne(Post, { 
     path: 'comments', 
     select: 'comment -post -creator -_id' 
 });
 
-// Update the post
+// update the post
 exports.updatePost = globalController.updateOne(Post);
 
-// Delete a Post
+// delete a Post
 exports.deletePost = globalController.deleteOne(Post);
 
-// Top 3 trending post from each domain
+// top 3 trending post from each domain
 exports.getTrendingPosts = catchAsyncError(async (req, res, next) => {
 
     const posts = await Post.aggregate([

@@ -13,6 +13,7 @@ exports.getCurrentCreator = (req, res, next) => {
 const filterObj = (obj, ...allowedFields) => {
 
     const newObj = {};
+
     // loop thru each key and if its permissible add it to newObj
     Object.keys(obj).forEach(elm => {
         if(allowedFields.includes(elm)) newObj[elm] = obj[elm];
@@ -20,15 +21,13 @@ const filterObj = (obj, ...allowedFields) => {
     return newObj;
 }
 
-// Get All Creator
+// get All Creator
 exports.getAllCreators = globalController.getAll(Creator);
 
-// Get a Creator
+// get a Creator
 exports.getCreator = globalController.getOne(Creator);
-    
-    
 
-// Create a Creator
+// create a Creator
 exports.createCreator = catchAsyncError(async (req, res, next) => {
 
     res.status(500).json({
@@ -37,7 +36,7 @@ exports.createCreator = catchAsyncError(async (req, res, next) => {
     });
 })
 
-// Update the Creator 
+// update the Creator 
 exports.updateCreator = catchAsyncError(async (req, res, next) => {
 
     res.status(500).json({
@@ -46,10 +45,10 @@ exports.updateCreator = catchAsyncError(async (req, res, next) => {
     });
 })
 
-// Delete the Creator
+// delete the Creator
 exports.deleteCreator = globalController.deleteOne(Creator);
 
-// Update the creator's account by theirself
+// update the creator's account by theirself
 exports.updateMe = catchAsyncError(async (req, res, next) => {
     
     // if creator want to updates its password from this route
@@ -74,7 +73,7 @@ exports.updateMe = catchAsyncError(async (req, res, next) => {
     });
 });
 
-// Delete the creator's account by theirself
+// delete the creator's account by theirself
 exports.deleteMe = catchAsyncError(async (req, res, next) => {
 
     // delete the creator account

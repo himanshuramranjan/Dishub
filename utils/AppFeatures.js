@@ -1,3 +1,4 @@
+// custom class to handle the queries
 class AppFeatures {
 
     constructor(query, queryString) {

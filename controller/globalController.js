@@ -2,18 +2,19 @@ const catchAsyncError = require('../utils/catchAsyncError');
 const AppError = require('../utils/AppError');
 const AppFeatures = require('../utils/AppFeatures');
 
-// Add Params to the req body
+// add Params to the req body
 exports.addParams = (req, res, next) => {
     
     // add postId to the req.body of creating comment
     if(req.params.postId) req.body.post = req.params.postId;
+
     // add Logged In creator to the req body
     req.body.creator = req.creator.id;
 
     next();
 }
 
-// Get All the docs
+// get All the docs
 exports.getAll = Model => catchAsyncError(async (req, res, next) => {
 
     // filters out comments for a given post
@@ -38,7 +39,7 @@ exports.getAll = Model => catchAsyncError(async (req, res, next) => {
     });
 });
 
-// Get a single doc
+// get a single doc
 exports.getOne = (Model, populateOpt) => catchAsyncError(async (req, res, next) => {
     
     let query = Model.findById(req.params.id);
@@ -60,7 +61,7 @@ exports.getOne = (Model, populateOpt) => catchAsyncError(async (req, res, next) 
     });
 });
 
-// Create a new doc
+// create a new doc
 exports.createOne = Model => catchAsyncError(async (req, res, next) => {
 
     const doc = await Model.create(req.body);
@@ -73,7 +74,7 @@ exports.createOne = Model => catchAsyncError(async (req, res, next) => {
     });
 });
 
-// Update the doc
+// update the doc
 exports.updateOne = Model => catchAsyncError(async (req, res, next) => {
 
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
@@ -93,7 +94,7 @@ exports.updateOne = Model => catchAsyncError(async (req, res, next) => {
     });
 });
 
-// Delete the doc
+// delete the doc
 exports.deleteOne = Model => catchAsyncError(async (req, res, next) => {
     
     const doc = await Model.findByIdAndDelete(req.params.id);

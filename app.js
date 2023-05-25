@@ -1,9 +1,10 @@
 const express = require('express');
 
-const errorHandler = require('./controller/errorController');
 const postRouter = require('./routes/postRoutes');
 const commentRouter = require('./routes/commentRoutes');
 const creatorRouter = require('./routes/creatorRoutes');
+
+const errorHandler = require('./controller/errorController');
 const AppError = require('./utils/AppError');
 
 const app = express();

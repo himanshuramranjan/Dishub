@@ -30,13 +30,13 @@ mongoose.connect(DB, {
     console.log('Connected w/ MongoDB');
 })
 
+// Define PORT
 const PORT = process.env.PORT || 8080;
 
 // Running the server
 const server = app.listen(PORT, () => {
     console.log(`Server is running on the PORT: ${PORT}`);
 });
-
 
 // Close Down Server on Unhadled Rejections from promise
 process.on('unhandledRejection', err => {
