@@ -35,9 +35,7 @@ const creatorSchema = new mongoose.Schema({
             message: 'Passwords are not the same'
         }
     },
-    passwordChangedAt: Date,
-    passwordResetToken: String,
-    passwordResetExpires: Date, 
+    passwordChangedAt: Date, 
 });
 
 // update passwordChangedAt, if password is changed

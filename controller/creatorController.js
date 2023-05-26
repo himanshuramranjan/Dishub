@@ -56,8 +56,8 @@ exports.updateMe = catchAsyncError(async (req, res, next) => {
         return next(new AppError(`This route is not for updating password`, 400));
     }
 
-    // filters out the field which cant be updated
-    const filterReq = filterObj(req.body, 'name', 'email');
+    // filters out the field (apart from given one) from body
+    const filterReq = filterObj(req.body, 'name');
 
     // update the user 
     const updatedCreator = await Creator.findByIdAndUpdate(req.creator.id, filterReq, {

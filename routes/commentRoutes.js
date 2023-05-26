@@ -11,7 +11,6 @@ const router = express.Router({ mergeParams: true});
 
 router
     .route('/')
-    .get(commentController.getAllComments)
     .post(
         authController.protectRoute,
         authController.restrictRoute('creator'), 
