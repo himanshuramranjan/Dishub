@@ -7,7 +7,7 @@ exports.hidePrivatePost = catchAsyncError(async (req, res, next) => {
 
     // add filter to hide private post for 'Get All Post' request
     if(!req.creator) {
-        req.query = { private: { ne: true }};
+        req.query.private = false;
     }
 
     // hide private post from other creators
