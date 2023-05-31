@@ -53,7 +53,7 @@ app.use('/api/v1/dishub/comments', commentRouter);
 app.use('/api/v1/dishub/creators', creatorRouter);
 
 // Any other undefined routes
-app.use('*', (req, res, next) => {
+app.all('*', (req, res, next) => {
     return next(new AppError(`Cant find ${req.originalUrl}`, 404));
 })
 
