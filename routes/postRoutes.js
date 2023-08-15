@@ -23,7 +23,7 @@ router
         );
 
 router
-    .route('/getTrendingPosts')
+    .route('/trending-posts')
     .get(postController.getTrendingPosts);
 
 // protects all the below routes from un-authenticated req

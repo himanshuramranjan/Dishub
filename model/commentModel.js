@@ -30,7 +30,7 @@ const commentSchema = new mongoose.Schema({
     toObject: { virtuals: true}
 });
 
-// populate the creator and related post of the comment
+// populate the creator 
 commentSchema.pre(/^find/, function(next) {
 
     this.populate({
